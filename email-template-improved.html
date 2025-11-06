@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hasil Psikotest Terpadu - 3S GSM</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Arial, sans-serif;
+      background: #f0f4f8;
+      color: #1a202c;
+      line-height: 1.6;
+      padding: 20px 10px;
+    }
+    
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Header dengan gradient modern */
+    header {
+      background: linear-gradient(135deg, #0e1f2f 0%, #173b5b 50%, #1a4d6f 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(23, 162, 184, 0.1) 0%, transparent 70%);
+    }
+    
+    header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    header h2 {
+      font-size: 16px;
+      font-weight: 400;
+      color: #b8dce8;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Badge untuk User ID */
+    .user-badge {
+      display: inline-block;
+      background: rgba(23, 162, 184, 0.2);
+      color: #17a2b8;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 12px;
+      border: 1px solid rgba(23, 162, 184, 0.3);
+    }
+    
+    /* Section styling */
+    section {
+      padding: 28px 32px;
+      border-bottom: 1px solid #e8eef4;
+    }
+    
+    section:last-of-type {
+      border-bottom: none;
+    }
+    
+    h3 {
+      color: #0e1f2f;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #17a2b8;
+      display: inline-block;
+    }
+    
+    /* Info table dengan styling modern */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    
+    .info-item {
+      background: #f8fafc;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border-left: 4px solid #17a2b8;
+    }
+    
+    .info-label {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    
+    .info-value {
+      font-size: 15px;
+      color: #1a202c;
+      font-weight: 600;
+    }
+    
+    /* Score cards dengan progress bars */
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    
+    .score-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+      border: 2px solid #e8eef4;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    
+    .score-card.total {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #eef9ff 0%, #d9f2fa 100%);
+      border-color: #17a2b8;
+      border-width: 3px;
+    }
+    
+    .score-label {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    
+    .score-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0e1f2f;
+      margin-bottom: 8px;
+    }
+    
+    .score-card.total .score-value {
+      font-size: 42px;
+      color: #17a2b8;
+    }
+    
+    /* Progress bar */
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e8eef4;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #17a2b8 0%, #0e8ca0 100%);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+    
+    .score-card.total .progress-fill {
+      background: linear-gradient(90deg, #17a2b8 0%, #138496 100%);
+    }
+    
+    /* Recommendation box dengan styling yang menonjol */
+    .recommendation-box {
+      text-align: center;
+      padding: 32px 24px;
+      margin: 24px 0;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .recommendation-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      opacity: 0.8;
+      z-index: 0;
+    }
+    
+    .recommendation-box.recommended::before {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    }
+    
+    .recommendation-box.not-recommended::before {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    }
+    
+    .recommendation-box > * {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .recommendation-label {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    
+    .recommendation-text {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+    
+    .recommendation-box.recommended .recommendation-text {
+      color: #065f46;
+    }
+    
+    .recommendation-box.not-recommended .recommendation-text {
+      color: #991b1b;
+    }
+    
+    .recommendation-box .recommendation-text {
+      color: #0e1f2f;
+    }
+    
+    /* DISC Profile box */
+    .disc-profile {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .disc-title {
+      font-size: 14px;
+      color: #92400e;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    
+    .disc-results {
+      font-size: 15px;
+      color: #78350f;
+      font-weight: 600;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    
+    .footer strong {
+      color: #1a202c;
+    }
+    
+    /* Responsive */
+    @media (max-width: 600px) {
+      .info-grid,
+      .score-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .score-card.total {
+        grid-column: 1;
+      }
+      
+      header h1 {
+        font-size: 22px;
+      }
+      
+      .score-value {
+        font-size: 28px;
+      }
+      
+      .score-card.total .score-value {
+        font-size: 36px;
+      }
+      
+      .recommendation-text {
+        font-size: 24px;
+      }
+    }
+    
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>📋 Hasil Psikotest Terpadu</h1>
+      <h2>PT Sarana Sukses Sejahtera — PT Gunungmas Sukses Makmur</h2>
+      <div class="user-badge">User ID: {{user_id}}</div>
+    </header>
+
+    <!-- Data Peserta -->
+    <section>
+      <h3>👤 Data Peserta</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Nama Lengkap</div>
+          <div class="info-value">{{nama}}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Jabatan / Posisi</div>
+          <div class="info-value">{{jabatan}}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Site Tujuan</div>
+          <div class="info-value">{{site}}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">NIK KTP</div>
+          <div class="info-value">{{nik}}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Nomor WhatsApp</div>
+          <div class="info-value">{{wa}}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Tanggal Test</div>
+          <div class="info-value">{{tanggal}}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hasil Tes dengan Score Cards -->
+    <section>
+      <h3>📊 Hasil Penilaian</h3>
+      <div class="score-grid">
+        <div class="score-card">
+          <div class="score-label">Attitude Score</div>
+          <div class="score-value">{{attitude_score}}</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: {{attitude_score}}%"></div>
+          </div>
+        </div>
+        
+        <div class="score-card">
+          <div class="score-label">IQ Score</div>
+          <div class="score-value">{{iq_score}}</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: {{iq_score}}%"></div>
+          </div>
+        </div>
+        
+        <div class="score-card">
+          <div class="score-label">Visual (EQ) Score</div>
+          <div class="score-value">{{visual_score}}</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: {{visual_score}}%"></div>
+          </div>
+        </div>
+        
+        <div class="score-card total">
+          <div class="score-label">⭐ Total Score</div>
+          <div class="score-value">{{total_score}}</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: {{total_score}}%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rekomendasi Akhir -->
+    <section>
+      <div class="recommendation-box">
+        <div class="recommendation-label">🎯 Rekomendasi Akhir</div>
+        <p class="recommendation-text">{{recommendation}}</p>
+      </div>
+    </section>
+
+    <!-- Profil DISC -->
+    <section>
+      <h3>🧠 Hasil Asesmen Psikometri</h3>
+      <div class="disc-profile">
+        <div class="disc-title">Profil DISC (Dominance, Influence, Steadiness, Compliance)</div>
+        <div class="disc-results">{{{papik_results}}}</div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer">
+      <strong>© 2025 PT Sarana Sukses Sejahtera — PT Gunungmas Sukses Makmur</strong><br>
+      Hasil dikirim otomatis oleh Sistem Psikotes 3S-GSM<br>
+      <em>Developed by Y.F - HCD - Dept HCGA</em><br>
+      <br>
+      📧 Untuk pertanyaan, hubungi: <strong>Psikotest@hc.3s-gsm.com</strong>
+    </div>
+  </div>
+</body>
+</html>

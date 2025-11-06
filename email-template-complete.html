@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Psikotest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #0e1f2f 0%, #173b5b 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #17a2b8;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 14px;
+            color: #cfe9f2;
+            margin-top: 5px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0e1f2f;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #17a2b8;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            background: #f8fbfd;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-value {
+            font-size: 16px;
+            color: #0e1f2f;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .score-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .score-card {
+            background: linear-gradient(135deg, #f8fbfd 0%, #eef6fa 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e8eef2;
+            transition: transform 0.2s;
+        }
+        .score-label {
+            font-size: 13px;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .score-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0e1f2f;
+            margin-bottom: 5px;
+        }
+        .score-subtitle {
+            font-size: 11px;
+            color: #6c757d;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e8eef2;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #17a2b8 0%, #138496 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        .recommendation-box {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+        }
+        .recommendation-box h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .recommendation-box .status {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .disc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .disc-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 3px solid #e8eef2;
+        }
+        .disc-card.dominance {
+            border-color: #dc3545;
+        }
+        .disc-card.influence {
+            border-color: #ffc107;
+        }
+        .disc-card.steadiness {
+            border-color: #28a745;
+        }
+        .disc-card.conscientiousness {
+            border-color: #007bff;
+        }
+        .disc-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .disc-card.dominance .disc-label {
+            color: #dc3545;
+        }
+        .disc-card.influence .disc-label {
+            color: #ffc107;
+        }
+        .disc-card.steadiness .disc-label {
+            color: #28a745;
+        }
+        .disc-card.conscientiousness .disc-label {
+            color: #007bff;
+        }
+        .disc-score {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0e1f2f;
+        }
+        .disc-description {
+            font-size: 11px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .details-section {
+            background: #f8fbfd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid #e8eef2;
+        }
+        .details-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0e1f2f;
+            margin-bottom: 12px;
+        }
+        .answer-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #17a2b8;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .footer {
+            background: #0e1f2f;
+            color: #cfe9f2;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        @media (max-width: 600px) {
+            .info-grid,
+            .score-cards,
+            .disc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📋 HASIL PSIKOTEST TERPADU</h1>
+            <p>PT Sarana Sukses Sejahtera - PT Gunungmas Sukses Makmur</p>
+            <p>Penilaian Attitude, IQ, Visual, dan Papikostick (DISC)</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Data Peserta -->
+            <div class="section">
+                <h2 class="section-title">👤 Data Peserta</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">User ID</div>
+                        <div class="info-value">{{user_id}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Nama Lengkap</div>
+                        <div class="info-value">{{nama}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Jabatan / Posisi</div>
+                        <div class="info-value">{{jabatan}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Site Tujuan</div>
+                        <div class="info-value">{{site}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">NIK KTP</div>
+                        <div class="info-value">{{nik}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">WhatsApp</div>
+                        <div class="info-value">{{wa}}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Tanggal Test</div>
+                        <div class="info-value">{{tanggal}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hasil Tes -->
+            <div class="section">
+                <h2 class="section-title">📊 Hasil Penilaian</h2>
+                <div class="score-cards">
+                    <div class="score-card">
+                        <div class="score-label">Attitude</div>
+                        <div class="score-value">{{attitude_score}}%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{attitude_score}}%"></div>
+                        </div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-label">IQ Test</div>
+                        <div class="score-value">{{iq_score}}%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{iq_score}}%"></div>
+                        </div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-label">Visual</div>
+                        <div class="score-value">{{visual_score}}%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{visual_score}}%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-card" style="max-width: 300px; margin: 0 auto;">
+                    <div class="score-label">Total Score</div>
+                    <div class="score-value" style="font-size: 48px; color: #17a2b8;">{{total_score}}%</div>
+                    <div class="score-subtitle">Bobot: Attitude 40% + IQ 40% + Visual 20%</div>
+                </div>
+            </div>
+
+            <!-- Rekomendasi -->
+            <div class="recommendation-box">
+                <h3>🎯 Rekomendasi Final</h3>
+                <div class="status">{{recommendation}}</div>
+            </div>
+
+            <!-- DISC Profile -->
+            <div class="section">
+                <h2 class="section-title">🧠 Profil DISC (Papikostick)</h2>
+                <div class="disc-grid">
+                    <div class="disc-card dominance">
+                        <div class="disc-label">D - Dominance</div>
+                        <div class="disc-score">{{dominance}}</div>
+                        <div class="disc-description">Kepemimpinan & Ketegasan</div>
+                    </div>
+                    <div class="disc-card influence">
+                        <div class="disc-label">I - Influence</div>
+                        <div class="disc-score">{{influence}}</div>
+                        <div class="disc-description">Komunikasi & Persuasi</div>
+                    </div>
+                    <div class="disc-card steadiness">
+                        <div class="disc-label">S - Steadiness</div>
+                        <div class="disc-score">{{steadiness}}</div>
+                        <div class="disc-description">Stabilitas & Kerjasama</div>
+                    </div>
+                    <div class="disc-card conscientiousness">
+                        <div class="disc-label">C - Conscientiousness</div>
+                        <div class="disc-score">{{conscientiousness}}</div>
+                        <div class="disc-description">Ketelitian & Analisis</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail Jawaban Attitude -->
+            <div class="section">
+                <h2 class="section-title">📝 Detail Jawaban Attitude (25 Pertanyaan)</h2>
+                <div class="details-section">
+                    <div class="answer-item">{{attitude_details}}</div>
+                </div>
+            </div>
+
+            <!-- Detail Jawaban IQ -->
+            <div class="section">
+                <h2 class="section-title">🧩 Detail Jawaban IQ (20 Pertanyaan)</h2>
+                <div class="details-section">
+                    <div class="answer-item">{{iq_details}}</div>
+                </div>
+            </div>
+
+            <!-- Detail Jawaban Visual -->
+            <div class="section">
+                <h2 class="section-title">👁️ Detail Jawaban Visual (15 Pertanyaan)</h2>
+                <div class="details-section">
+                    <div class="answer-item">{{visual_details}}</div>
+                </div>
+            </div>
+
+            <!-- Detail Jawaban Papikostick -->
+            <div class="section">
+                <h2 class="section-title">🎯 Detail Jawaban Papikostick (50 Pertanyaan)</h2>
+                <div class="details-section">
+                    <div class="answer-item">{{papik_details}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>© 2025 PT Sarana Sukses Sejahtera - PT Gunungmas Sukses Makmur</strong></p>
+            <p>Y.F - HCD - Dept HCGA</p>
+            <p>Email: Psikotest@hc.3s-gsm.com</p>
+        </div>
+    </div>
+</body>
+</html>
