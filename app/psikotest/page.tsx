@@ -186,8 +186,10 @@ export default function PsikotestPage() {
     setTimerActive(false)
 
     if (currentPage === 3) {
-      // Changed from 2 to 3
-      // Attitude timeout - mark as unanswered (0) and advance
+      const randomValue = Math.floor(Math.random() * 5) + 1 // Random 1-5
+      const newAnswers = { ...attitudeAnswers, [currentAttitudeIndex]: randomValue }
+      setAttitudeAnswers(newAnswers)
+
       if (currentAttitudeIndex < attitudeQuestions.length - 1) {
         setFadeOut(true)
         setTimeout(() => {
@@ -199,8 +201,12 @@ export default function PsikotestPage() {
         setCurrentIQIndex(0)
       }
     } else if (currentPage === 4) {
-      // Changed from 3 to 4
-      // IQ timeout - mark as unanswered and advance
+      const currentQuestion = iqQuestions[currentIQIndex]
+      const randomIndex = Math.floor(Math.random() * currentQuestion.options.length)
+      const randomAnswer = currentQuestion.options[randomIndex]
+      const newAnswers = { ...iqAnswers, [currentIQIndex]: randomAnswer }
+      setIQAnswers(newAnswers)
+
       if (currentIQIndex < iqQuestions.length - 1) {
         setFadeOut(true)
         setTimeout(() => {
@@ -212,8 +218,12 @@ export default function PsikotestPage() {
         setCurrentVisualIndex(0)
       }
     } else if (currentPage === 5) {
-      // Changed from 4 to 5
-      // Visual timeout - mark as unanswered and advance
+      const currentQuestion = visualQuestions[currentVisualIndex]
+      const randomIndex = Math.floor(Math.random() * currentQuestion.options.length)
+      const randomAnswer = currentQuestion.options[randomIndex]
+      const newAnswers = { ...visualAnswers, [currentVisualIndex]: randomAnswer }
+      setVisualAnswers(newAnswers)
+
       if (currentVisualIndex < visualQuestions.length - 1) {
         setFadeOut(true)
         setTimeout(() => {
@@ -702,20 +712,20 @@ export default function PsikotestPage() {
     const isWarning = timeRemaining <= 10
     return (
       <div
-        className={`text-center py-4 px-6 mb-4 rounded-lg font-bold text-2xl transition-colors ${
-          isWarning ? "bg-red-100 text-red-700 animate-pulse" : "bg-blue-100 text-blue-700"
+        className={`fixed bottom-4 left-4 z-50 py-2 px-4 rounded-lg font-bold text-lg shadow-lg transition-colors ${
+          isWarning ? "bg-red-500 text-white animate-pulse" : "bg-blue-600 text-white"
         }`}
       >
-        <div className="flex items-center justify-center gap-2">
-          <span className="text-3xl">{isWarning ? "⚠️" : "⏱️"}</span>
-          <div>
-            <div className="text-sm font-normal">Waktu Tersisa</div>
-            <div className="text-4xl font-bold">
+        <div className="flex items-center gap-2">
+          <span className="text-xl">{isWarning ? "⚠️" : "⏱️"}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-xs font-normal">Waktu:</span>
+            <span className="text-xl font-bold">
               {Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, "0")}
-            </div>
+            </span>
           </div>
         </div>
-        {isWarning && <div className="text-sm mt-2">Segera jawab! Waktu hampir habis!</div>}
+        {isWarning && <div className="text-xs mt-1 text-center">Segera jawab!</div>}
       </div>
     )
   }
@@ -966,8 +976,6 @@ export default function PsikotestPage() {
 
           {currentPage === 3 && attitudeQuestions.length > 0 && (
             <div className="p-6">
-              <TimerDisplay />
-
               <Alert className="mb-4 bg-[#eef9ff] border-[#cfe9f2]">
                 <AlertDescription>
                   Jawab jujur berdasarkan frekuensi perilaku Anda. Skala: 1 (Tidak Pernah) – 5 (Selalu). Waktu: 30 detik
@@ -1006,13 +1014,12 @@ export default function PsikotestPage() {
                   </RadioGroup>
                 </Card>
               </div>
+              {timerActive && <TimerDisplay />}
             </div>
           )}
 
           {currentPage === 4 && iqQuestions.length > 0 && (
             <div className="p-6">
-              <TimerDisplay />
-
               <Alert className="mb-4 bg-[#eef9ff] border-[#cfe9f2]">
                 <AlertDescription>Pilih jawaban terbaik. Waktu: 60 detik per pertanyaan.</AlertDescription>
               </Alert>
@@ -1040,13 +1047,12 @@ export default function PsikotestPage() {
                   </RadioGroup>
                 </Card>
               </div>
+              {timerActive && <TimerDisplay />}
             </div>
           )}
 
           {currentPage === 5 && visualQuestions.length > 0 && (
             <div className="p-6">
-              <TimerDisplay />
-
               <Alert className="mb-4 bg-[#eef9ff] border-[#cfe9f2]">
                 <AlertDescription>
                   Amati pola visual sederhana dan pilih jawaban yang tepat. Waktu: 45 detik per pertanyaan.
@@ -1079,6 +1085,7 @@ export default function PsikotestPage() {
                   </RadioGroup>
                 </Card>
               </div>
+              {timerActive && <TimerDisplay />}
             </div>
           )}
 
