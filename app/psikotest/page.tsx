@@ -29,7 +29,6 @@ const TIMER_LIMITS = {
   attitude: 30, // 30 seconds per question
   iq: 60, // 60 seconds per question
   visual: 45, // 45 seconds per question
-  papikostick: 30, // 30 seconds per question
 }
 
 export default function PsikotestPage() {
@@ -121,7 +120,7 @@ export default function PsikotestPage() {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [timerActive, timeRemaining, currentPage, currentAttitudeIndex, currentIQIndex, currentVisualIndex, papikIndex])
+  }, [timerActive, timeRemaining, currentPage, currentAttitudeIndex, currentIQIndex, currentVisualIndex]) // Removed papikIndex from dependencies
 
   useEffect(() => {
     if (currentPage === 3 && attitudeQuestions.length > 0) {
@@ -136,10 +135,6 @@ export default function PsikotestPage() {
       // Changed from 4 to 5 for visual page
       setTimeRemaining(TIMER_LIMITS.visual)
       setTimerActive(true)
-    } else if (currentPage === 6) {
-      // Changed from 5 to 6 for Papikostick page
-      setTimeRemaining(TIMER_LIMITS.papikostick)
-      setTimerActive(true)
     } else {
       setTimerActive(false)
     }
@@ -148,7 +143,6 @@ export default function PsikotestPage() {
     currentAttitudeIndex,
     currentIQIndex,
     currentVisualIndex,
-    papikIndex,
     attitudeQuestions.length,
     iqQuestions.length,
     visualQuestions.length,
@@ -232,16 +226,6 @@ export default function PsikotestPage() {
         setPapikAnswers([])
         setMostSelected(null)
         setLeastSelected(null)
-      }
-    } else if (currentPage === 6) {
-      // Changed from 5 to 6
-      // Papikostick timeout - skip this question
-      if (papikIndex < papikQuestions.length - 1) {
-        setPapikIndex(papikIndex + 1)
-        setMostSelected(null)
-        setLeastSelected(null)
-      } else {
-        showPage(7) // Changed from 6 to 7
       }
     }
   }
@@ -1100,13 +1084,11 @@ export default function PsikotestPage() {
 
           {currentPage === 6 && (
             <div className="p-6">
-              <TimerDisplay />
-
               <Alert className="mb-4 bg-[#eef9ff] border-[#cfe9f2]">
                 <AlertDescription>
                   Pilih satu yang <strong>Paling Menggambarkan</strong> (MOST) dan satu yang{" "}
-                  <strong>Paling Tidak Menggambarkan</strong> (LEAST). Waktu: 30 detik per pertanyaan. Setelah memilih
-                  keduanya, soal akan berganti otomatis. Anda <strong>tidak dapat kembali</strong> ke soal sebelumnya.
+                  <strong>Paling Tidak Menggambarkan</strong> (LEAST). Setelah memilih keduanya, soal akan berganti
+                  otomatis. Anda <strong>tidak dapat kembali</strong> ke soal sebelumnya.
                 </AlertDescription>
               </Alert>
 
